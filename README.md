@@ -12,7 +12,7 @@ This project demonstrates an end-to-end data analytics pipeline designed to proc
 ## ⚡ Key Pipeline Architecture
 
 ### 1. Dynamic Dataset Discovery & Merging
-Instead of hardcoding filenames, the pipeline utilizes the `glob` module to automatically discover all files matching the pattern `large_sales_month*.csv`. This ensures scalability, enabling the pipeline to process 3, 12, or 50 months of data without changing a single line of code.
+Instead of hardcoding filenames, the pipeline utilizes the `glob` module to automatically discover all files matching the pattern `data/large_sales_month*.csv`. This ensures scalability, enabling the pipeline to process 3, 12, or 50 months of data without changing a single line of code.
 
 ### 2. Multi-Pass Advanced Date Parsing
 The source files contained severe date formatting chaos (e.g., `YYYY/MM/DD HH:MM`, `DD/MM/YYYY`, and `MM-DD-YYYY` mixed together). Standard auto-parsing led to severe data drift. 
