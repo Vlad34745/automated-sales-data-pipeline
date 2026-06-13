@@ -35,5 +35,5 @@ Utilizing `openpyxl`, the pipeline generates a professional multi-sheet spreadsh
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/yourusername/sales-data-pipeline.git](https://github.com/yourusername/sales-data-pipeline.git)
+   git clone [https://github.com/Vlad34745/sales-data-pipeline.git](https://github.com/Vlad34745/sales-data-pipeline.git)
    cd sales-data-pipeline
