@@ -5,23 +5,23 @@ This project demonstrates an end-to-end data analytics pipeline designed to proc
 
 ## 🛠️ Tech Stack & Tools
 - **Language:** Python 3.14+
-- **Libraries:** Pandas, Glob, OpenPyXL, Sys, Subprocess
+- **Libraries:** Pandas, OpenPyXL
 - **Environment:** Isolated Virtual Environment (`venv`)
 - **IDE:** VS Code / Jupyter Notebooks
 
 ## ⚡ Key Pipeline Architecture
 
 ### 1. Dynamic Dataset Discovery & Merging
-Instead of hardcoding filenames, the pipeline utilizes the `glob` module to automatically discover all files matching the pattern `data/large_sales_month*.csv`. This ensures scalability, enabling the pipeline to process 3, 12, or 50 months of data without changing a single line of code.
+Instead of hardcoding filenames, the pipeline utilizes the `glob` module to automatically discover all files matching the pattern `raw_data/large_sales_month*.csv`. This ensures scalability, enabling the pipeline to process 3, 12, or 50 months of data without changing a single line of code.
 
 ### 2. Multi-Pass Advanced Date Parsing
-The source files contained severe date formatting chaos (e.g., `YYYY/MM/DD HH:MM`, `DD/MM/YYYY`, and `MM-DD-YYYY` mixed together). Standard auto-parsing led to severe data drift. 
+The source files contained severe date formatting chaos (e.g., `YYYY/MM/DD HH:MM`, `DD/MM/YYYY`, and `MM-DD-YYYY` mixed together). Standard auto-parsing led to severe data drift.
 - Implemented a custom iterative parsing function (`clean_mixed_dates`) using structured priority fallback formats.
 - Achieved **100% conversion accuracy** (0 unparsed dates remaining) and restored correct chronological alignment for 15,000 transactions strictly into Q1 2026.
 
 ### 3. Intelligent Data Imputation & Text Cleaning
 - **Price Extraction:** Used Regular Expressions (Regex) to strip formatting clutter (`$`, `USD`, spaces, commas) and cast values to numeric `float64`.
-- **Contextual Imputation:** Missing values ($NaN$) in prices were intelligently filled by calculating the **median price of that specific product group** rather than a blunt global average.
+- **Contextual Imputation:** Missing values (`NaN`) in prices were intelligently filled by calculating the **median price of that specific product group** rather than a blunt global average.
 - **Text Standardization:** Fixed casing duplicates (e.g., `iphone 15 pro` vs `iPhone 15 Pro`) and trimmed trailing whitespaces to prevent reporting fragmentation.
 - **Quantity Fixes:** Imputed missing values with a baseline of `1` unit and converted the feature to an explicit `int` type.
 
@@ -35,5 +35,26 @@ Utilizing `openpyxl`, the pipeline generates a professional multi-sheet spreadsh
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/Vlad34745/sales-data-pipeline.git](https://github.com/Vlad34745/sales-data-pipeline.git)
-   cd sales-data-pipeline
+   git clone https://github.com/Vlad34745/automated-sales-data-pipeline.git
+   cd automated-sales-data-pipeline
+   ```
+
+2. **Create and activate a virtual environment:**
+   ```bash
+   python -m venv venv
+   # Windows
+   venv\Scripts\activate
+   # macOS/Linux
+   source venv/bin/activate
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run the pipeline:**
+   Open `data_cleaning.ipynb` in VS Code or Jupyter and run all cells sequentially. Sample data is already included in the `raw_data/` folder, so the notebook works out of the box.
+
+5. **Output:**
+   A styled `final_sales_analytics_report.xlsx` will be generated in the project root, containing the cleaned master dataset plus monthly and product performance summaries.
