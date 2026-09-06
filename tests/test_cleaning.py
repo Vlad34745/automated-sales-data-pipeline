@@ -19,6 +19,14 @@ class TestCleanProductNames:
         result = clean_product_names(pd.Series([None, "iPhone 15 Pro"]))
         assert result.iloc[0] == "Unknown Product"
 
+    def test_fills_missing_regardless_of_pandas_str_cast_behavior(self):
+        # Regression: pandas 2.x перетворює None на рядок 'None' через
+        # .astype(str), а pandas 3.x лишає його як NaN. Перевіряємо
+        # обидва випадки явно, щоб цей баг не повторився в CI знову.
+        result = clean_product_names(pd.Series([None, float("nan"), "A"]))
+        assert result.iloc[0] == "Unknown Product"
+        assert result.iloc[1] == "Unknown Product"
+
     def test_merges_case_variants_without_hardcoded_list(self):
         # 'macbook air', 'MACBOOK AIR', 'MacBook Air' мають звестись до одного значення,
         # навіть якщо цього конкретного написання немає в PRODUCT_NAME_EXCEPTIONS.

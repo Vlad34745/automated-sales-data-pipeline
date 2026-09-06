@@ -23,9 +23,18 @@ def clean_product_names(names: pd.Series) -> pd.Series:
     (напр. 'MACBOOK air', 'macbook Air') без потреби заздалегідь
     перелічувати кожен можливий варіант.
     """
+    # Пропуски визначаються ДО .astype(str), а не після — pandas.isna()
+    # надійно працює на будь-якій версії pandas. Якщо перевіряти "nan" як
+    # рядок вже після приведення до str, результат залежить від версії:
+    # у pandas 2.x None перетворюється на рядок 'None', а в pandas 3.x
+    # лишається як NaN. Такий баг реально ловився в CI (pandas 2.3.3),
+    # хоча локально під pandas 3.0.2 все виглядало робочим.
+    is_missing = names.isna()
     cleaned = names.astype(str).str.strip()
-    cleaned = cleaned.replace("nan", pd.NA)
-    cleaned = cleaned.fillna(config.DEFAULT_PRODUCT_NAME)
+    cleaned = cleaned.mask(is_missing, config.DEFAULT_PRODUCT_NAME)
+    # Додатковий запобіжник на випадок, якщо "nan"/"None" все ж просочиться
+    # рядком (напр. якщо джерело вже містило такий текст як значення).
+    cleaned = cleaned.replace({"nan": config.DEFAULT_PRODUCT_NAME, "None": config.DEFAULT_PRODUCT_NAME})
 
     def normalize(name: str) -> str:
         exception = config.PRODUCT_NAME_EXCEPTIONS.get(name.lower())
