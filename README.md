@@ -1,6 +1,7 @@
 # Automated Sales Data Cleaning & Business Intelligence Pipeline
 
 ![CI](https://github.com/Vlad34745/automated-sales-data-pipeline/actions/workflows/ci.yml/badge.svg)
+[![codecov](https://codecov.io/gh/Vlad34745/automated-sales-data-pipeline/branch/main/graph/badge.svg)](https://codecov.io/gh/Vlad34745/automated-sales-data-pipeline)
 
 ## 📌 Project Overview
 
@@ -62,13 +63,14 @@ column auto-fitting, and currency formatting (`$#,##0.00`).
 The cleaning, loading, and reporting logic is covered by a `pytest` suite (`tests/`), including a
 regression test for the ambiguous-date bug described above. Every push and pull request to `main`
 runs the full test suite plus an end-to-end smoke run of the pipeline, on Python 3.10, 3.11, and 3.12,
-via GitHub Actions (`.github/workflows/ci.yml`).
+via GitHub Actions (`.github/workflows/ci.yml`). Coverage is tracked and reported by
+[Codecov](https://codecov.io/gh/Vlad34745/automated-sales-data-pipeline).
 
 Run the tests locally:
 
 ```bash
 pip install -r requirements-dev.txt
-pytest tests/ -v --cov=src
+pytest tests/ -v --cov=src --cov-report=term-missing
 ```
 
 ## 🚀 How to Run the Project
