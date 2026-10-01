@@ -2,6 +2,7 @@
 
 ![CI](https://github.com/Vlad34745/automated-sales-data-pipeline/actions/workflows/ci.yml/badge.svg)
 [![codecov](https://codecov.io/gh/Vlad34745/automated-sales-data-pipeline/branch/main/graph/badge.svg)](https://codecov.io/gh/Vlad34745/automated-sales-data-pipeline)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## 📌 Project Overview
 
@@ -127,5 +128,10 @@ automated-sales-data-pipeline/
 ├── data_cleaning.ipynb         # Exploratory, narrated walkthrough (uses src/)
 ├── raw_data/                   # Sample input CSVs
 ├── requirements.txt
-└── requirements-dev.txt
+├── requirements-dev.txt
+└── LICENSE
 ```
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE) — free to use, modify, and distribute.
